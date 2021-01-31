@@ -1,31 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Vue</title>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Product app</title>
+	<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
-	<div id="app">
-		<ul>
-			<li v-for="product in products">
-				{{ product }}
-			</li>
-		</ul>
+	<div class="nav-bar bg-gradient-to-r from-green-400 to-blue-500 w-full h-16 flex flex-row-reverse">
+		<div class="border mx-4 my-4">
+			<p>Cart {{ cart }}</p>
+		</div>
 	</div>
-	<script src="https://unpkg.com/vue"></script>
-	<script>
-		const app = new Vue({
-			el: '#app',
-			data: {
-				products: []
-			},
-			created () {
-				fetch('https://api.myjson.com/bins/74l63')
-				.then(response =>response.json())
-				.then(json => {
-					this.products = json.products
-				})
-			}
-		});
-	</script>
+	<div id="app">
+		<div class="product flex">
+			<div class="product-image w-1/3 mx-4 my-2 border">
+				<img v-bind:src="image" class="object-contain h-50 w-full">
+			</div>
+
+			<div class="product-info mx-2 my-2">
+				<h1 class="text-4xl">{{ product }}</h1>
+				<p v-if="inventory > 10">In stock</p>
+				<p v-else-if="inventory <=10 && inventory > 0">Almost out of stock</p>
+				<p v-else>Out stock</p>
+				<ul class="list-disc ml-8">
+					<li v-for="detail in details">{{ detail }}</li>
+				</ul>
+				<div v-for="variant in variants" :key="variant.variantId">
+					<p @mouseover="updateProduct(variant.variantImg)">{{ variant.variantColor }}</p>
+				</div>
+
+				<div class="flex">
+					<button v-on:click="addToCart" class="bg-blue-600 hover:bg-blue-500 rounded px-2 py-2 my-2 text-white">Add to Cart</button>
+					<div class="border mx-2 my-2">
+						<p class="px-2 py-2">Cart {{ cart }}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+	<script type="text/javascript" src="main.js"></script>
 </body>
 </html>
