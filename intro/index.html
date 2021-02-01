@@ -8,14 +8,11 @@
 	<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
-	<div class="nav-bar bg-gradient-to-r from-green-400 to-blue-500 w-full h-16 flex flex-row-reverse">
-		<div class="border mx-4 my-4">
-			<p>Cart {{ cart }}</p>
-		</div>
-	</div>
 	<div id="app">
-		<div class="border mx-4 my-4">
-			<p>Cart {{ cart.length }}</p>
+		<div class="nav-bar bg-gradient-to-r from-green-400 to-blue-500 w-full h-16 flex flex-row-reverse">
+			<div class="mx-5 my-5">
+				<p>Cart {{ cart.length }}</p>
+			</div>
 		</div>
 		<product :premium="premium" @add-to-cart="updateCart" @remove-from-cart="reduceCart"></product>
 	</div>

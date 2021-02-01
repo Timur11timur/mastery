@@ -6,39 +6,42 @@ Vue.component('product', {
 		}
 	},
 	template: `
-		<div class="product flex">
-			<div class="product-image w-1/3 mx-4 my-2 border">
-				<img v-bind:src="image" class="object-contain h-50 w-full" alt="Image">
-			</div>inventory
-
-			<div class="product-info mx-2 my-2">
-				<h1 :class="{ 'text-blue-500': onSale }" class="text-4xl" v-text="title"></h1>
-				<p v-if="inStock > 10">In stock</p>
-				<p v-else-if="inStock <=10 && inStock > 0">Almost out of stock</p>
-				<p v-else>Out stock</p>
-				<p>Shipping: {{ shipping }}</p>
-				<ul class="list-disc ml-8">
-					<li v-for="detail in details">{{ detail }}</li>
-				</ul>
-				<div v-for="(variant, index) in variants"
-				:key="variant.variantId"
-				 class="mt-1 w-10 h-10"
-				:style="{ backgroundColor: variant.variantColor }"
-				@mouseover="updateProduct(index)">
-			</div>
+		<div>
+			<div class="product flex">
+				<div class="product-image w-1/3 mx-4 my-2 border">
+					<img v-bind:src="image" class="object-contain h-50 w-full" alt="Image">
+				</div>
 	
-			<div class="flex">
-				<button v-on:click="addToCart"
-				:disable="!inStock"
-				:class="{
-											'bg-grey-600': !inStock,
-											'bg-blue-600 text-white': inStock,
-										 }"
-				 class="hover:bg-blue-500 border rounded px-2 py-2 my-2">Add to Cart</button>
-				<button v-on:click="removeFromCart"
-				 class="ml-2 bg-grey-600 hover:bg-grey-600 border rounded px-2 py-2 my-2">Remove one from Cart</button>
+				<div class="product-info ml-8 mt-8">
+					<h1 :class="{ 'text-blue-500': onSale }" class="text-4xl" v-text="title"></h1>
+					<p v-if="inStock > 10">In stock</p>
+					<p v-else-if="inStock <=10 && inStock > 0">Almost out of stock</p>
+					<p v-else>Out stock</p>
+					<p>Shipping: {{ shipping }}</p>
+					<ul class="list-disc ml-8">
+						<li v-for="detail in details">{{ detail }}</li>
+					</ul>
+					<div v-for="(variant, index) in variants"
+					:key="variant.variantId"
+					 class="mt-1 w-10 h-10"
+					:style="{ backgroundColor: variant.variantColor }"
+					@mouseover="updateProduct(index)">
+				</div>
+		
+				<div class="flex">
+					<button v-on:click="addToCart"
+					:disable="!inStock"
+					:class="{
+												'bg-grey-600': !inStock,
+												'bg-blue-600 text-white': inStock,
+											 }"
+					 class="hover:bg-blue-500 border rounded px-2 py-2 my-2">Add to Cart</button>
+					<button v-on:click="removeFromCart"
+					 class="ml-2 bg-grey-600 hover:bg-grey-600 border rounded px-2 py-2 my-2">Remove one from Cart</button>
+				</div>
 			</div>
 		</div>
+		<product-review></product-review>
 	</div>`,
 	data() {
 		return {
@@ -100,7 +103,39 @@ Vue.component('product', {
 			return 2.99
 		}
 	}
-})
+});
+
+Vue.component('product-review', {
+	template: `
+		<form action="" class="border rounded mx-6 my-6 w-1/2 p-6">
+			<div>
+				<label for="name">Name:</label>
+				<input id="name" class="border rounded w-full" v-model="name">
+			</div>
+			<div>
+				<label for="review">Review:</label>
+				<textarea id="review" class="border rounded w-full" v-model="review"></textarea>
+			</div>
+			<div>
+				<label for="rating">Rating:</label>
+				<select v-model.number="rating" id="rating" class="">
+					<option value="5"></option>
+					<option value="4"></option>
+					<option value="3"></option>
+					<option value="2"></option>
+					<option value="1"></option>
+				</select>
+			</div>
+			<button type="submit" class="">Submit</button>
+		</form>`,
+	data() {
+		return {
+			name: null,
+			review: null,
+			raiting: null
+		}
+	}
+});
 
 
 var app = new Vue({
