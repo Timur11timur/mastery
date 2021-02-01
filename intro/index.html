@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<meta charset="UTF-8" />
+	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="shortcut icon" href="images/socks.png" type="image/png">
 	<title>Product app</title>
 	<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 </head>
@@ -15,23 +16,32 @@
 	<div id="app">
 		<div class="product flex">
 			<div class="product-image w-1/3 mx-4 my-2 border">
-				<img v-bind:src="image" class="object-contain h-50 w-full">
+				<img v-bind:src="image" class="object-contain h-50 w-full" alt="Image">
 			</div>
 
 			<div class="product-info mx-2 my-2">
-				<h1 class="text-4xl">{{ product }}</h1>
+				<h1 class="text-4xl" v-text="title"></h1>
 				<p v-if="inventory > 10">In stock</p>
 				<p v-else-if="inventory <=10 && inventory > 0">Almost out of stock</p>
 				<p v-else>Out stock</p>
 				<ul class="list-disc ml-8">
 					<li v-for="detail in details">{{ detail }}</li>
 				</ul>
-				<div v-for="variant in variants" :key="variant.variantId">
-					<p @mouseover="updateProduct(variant.variantImg)">{{ variant.variantColor }}</p>
+				<div v-for="variant in variants"
+					 :key="variant.variantId"
+					class="mt-1 w-10 h-10"
+					:style="{ backgroundColor: variant.variantColor }"
+					@mouseover="updateProduct(variant.variantImg)">
 				</div>
 
 				<div class="flex">
-					<button v-on:click="addToCart" class="bg-blue-600 hover:bg-blue-500 rounded px-2 py-2 my-2 text-white">Add to Cart</button>
+					<button v-on:click="addToCart"
+							:disable="!inStock"
+							:class="{
+								'bg-grey-600': !inStock,
+								'bg-blue-600 text-white': inStock,
+							 }"
+							class="hover:bg-blue-500 border rounded px-2 py-2 my-2">Add to Cart</button>
 					<div class="border mx-2 my-2">
 						<p class="px-2 py-2">Cart {{ cart }}</p>
 					</div>

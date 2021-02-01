@@ -11,7 +11,7 @@ v-on:click - привязка ивента. Короткий вариант пр
 ...
 
 @click
-@submin
+@submit
 @mouseover
 @keyup.enter
 
@@ -21,3 +21,5 @@ v-on:click - привязка ивента. Короткий вариант пр
 
 data - пул с переменными
 methods - пул с методами
+computed - подготовленные данные
+
