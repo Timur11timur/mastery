@@ -17,21 +17,21 @@
 		<div class="product flex">
 			<div class="product-image w-1/3 mx-4 my-2 border">
 				<img v-bind:src="image" class="object-contain h-50 w-full" alt="Image">
-			</div>
+			</div>inventory
 
 			<div class="product-info mx-2 my-2">
-				<h1 class="text-4xl" v-text="title"></h1>
-				<p v-if="inventory > 10">In stock</p>
-				<p v-else-if="inventory <=10 && inventory > 0">Almost out of stock</p>
+				<h1 :class="{ 'text-blue-500': onSale }" class="text-4xl" v-text="title"></h1>
+				<p v-if="inStock > 10">In stock</p>
+				<p v-else-if="inStock <=10 && inStock > 0">Almost out of stock</p>
 				<p v-else>Out stock</p>
 				<ul class="list-disc ml-8">
 					<li v-for="detail in details">{{ detail }}</li>
 				</ul>
-				<div v-for="variant in variants"
+				<div v-for="(variant, index) in variants"
 					 :key="variant.variantId"
 					class="mt-1 w-10 h-10"
 					:style="{ backgroundColor: variant.variantColor }"
-					@mouseover="updateProduct(variant.variantImg)">
+					@mouseover="updateProduct(index)">
 				</div>
 
 				<div class="flex">
