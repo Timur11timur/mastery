@@ -35,9 +35,8 @@ Vue.component('product', {
 											'bg-blue-600 text-white': inStock,
 										 }"
 				 class="hover:bg-blue-500 border rounded px-2 py-2 my-2">Add to Cart</button>
-				<div class="border mx-2 my-2">
-					<p class="px-2 py-2">Cart {{ cart }}</p>
-				</div>
+				<button v-on:click="removeFromCart"
+				 class="ml-2 bg-grey-600 hover:bg-grey-600 border rounded px-2 py-2 my-2">Remove one from Cart</button>
 			</div>
 		</div>
 	</div>`,
@@ -66,13 +65,15 @@ Vue.component('product', {
 					variantImg: "images/socks3.jpg",
 					variantQuantity: 0
 				}
-			],
-			cart: 0
+			]
 		}
 	},
 	methods: {
-		addToCart: function() {
-			this.cart++;
+		addToCart() {
+			this.$emit('add-to-cart', this.variants[this.selectedVariant].variantId)
+		},
+		removeFromCart() {
+			this.$emit('remove-from-cart', this.variants[this.selectedVariant].variantId)
 		},
 		updateProduct(index) {
 			this.selectedVariant = index
@@ -105,6 +106,18 @@ Vue.component('product', {
 var app = new Vue({
 	el: '#app',
 	data: {
-		premium: true
+		premium: true,
+		cart: []
+	},
+	methods: {
+		updateCart(id) {
+			this.cart.push(id);
+		},
+		reduceCart(id) {
+			let index = this.cart.indexOf(id);
+			if (index > -1) {
+				this.cart.splice(index, 1);
+			}
+		}
 	}
 });

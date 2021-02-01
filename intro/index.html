@@ -14,7 +14,10 @@
 		</div>
 	</div>
 	<div id="app">
-		<product :premium="premium"></product>
+		<div class="border mx-4 my-4">
+			<p>Cart {{ cart.length }}</p>
+		</div>
+		<product :premium="premium" @add-to-cart="updateCart" @remove-from-cart="reduceCart"></product>
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 	<script type="text/javascript" src="main.js"></script>
