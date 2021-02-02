@@ -187,7 +187,7 @@ Vue.component('review-tabs', {
 	},
 	template: `
 		<div class="mx-6 mt-6">
-			<span class="tab"
+			<span class="tab cursor-pointer"
 				:class="{ 'text-2xl': selectedTab === tab}"
 				v-for="(tab, index) in tabs" :key="index"
 				@click="selectedTab = tab">
