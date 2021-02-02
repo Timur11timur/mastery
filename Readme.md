@@ -16,6 +16,8 @@ v-model - двухсторонняс связь с переменной
 @mouseover
 @keyup.enter
 
+.prevent
+
 
 # Части
 ...

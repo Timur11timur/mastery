@@ -41,7 +41,18 @@ Vue.component('product', {
 				</div>
 			</div>
 		</div>
-		<product-review></product-review>
+		<div class="mx-6 mt-6">
+			<h2 class="text-4xl">Reviews</h2>
+			<p v-if="!reviews.length">There are no reviews yet.</p>
+			<ul class="ml-4">
+				<li v-for="review in reviews" class="mt-2">
+					<p>{{ review.review }}</p>
+					<p>Rating: {{ review.rating }}</p>
+					<p>By: {{ review.name }}</p>
+				</li>
+			</ul>
+		</div>
+		<product-review @review-submitted="addReview"></product-review>
 	</div>`,
 	data() {
 		return {
@@ -68,7 +79,8 @@ Vue.component('product', {
 					variantImg: "images/socks3.jpg",
 					variantQuantity: 0
 				}
-			]
+			],
+			reviews: []
 		}
 	},
 	methods: {
@@ -80,6 +92,9 @@ Vue.component('product', {
 		},
 		updateProduct(index) {
 			this.selectedVariant = index
+		},
+		addReview(productReview) {
+			this.reviews.push(productReview)
 		}
 	},
 	computed: {
@@ -107,32 +122,65 @@ Vue.component('product', {
 
 Vue.component('product-review', {
 	template: `
-		<form action="" class="border rounded mx-6 my-6 w-1/2 p-6">
+		<form action="" class="border rounded mx-6 my-6 w-1/2 p-6" @submit.prevent="onSubmit">
+			<div v-if="errors.length" class=" border rounded border-red-500 p-4 mb-2">
+				<p class="text-red-500">Please correct the following error(s):</p>
+				<ul class="list-disc ml-8">
+					<li class="text-red-500" v-for="error in errors">{{ error}}</li>
+				</ul>
+			</div>
 			<div>
 				<label for="name">Name:</label>
-				<input id="name" class="border rounded w-full" v-model="name">
+				<input id="name" class="border rounded w-full px-2 py-1" v-model="name">
 			</div>
-			<div>
+			<div class="mt-2">
 				<label for="review">Review:</label>
-				<textarea id="review" class="border rounded w-full" v-model="review"></textarea>
+				<textarea id="review" class="border rounded w-full p-2 h-24" v-model="review"></textarea>
 			</div>
-			<div>
+			<div class="mt-2">
 				<label for="rating">Rating:</label>
-				<select v-model.number="rating" id="rating" class="">
-					<option value="5"></option>
-					<option value="4"></option>
-					<option value="3"></option>
-					<option value="2"></option>
-					<option value="1"></option>
+				<select v-model.number="rating" id="rating" class="border rounded text-black bg-white px-2 py-1 ml-2">
+					<option value="5">5</option>
+					<option value="4">4</option>
+					<option value="3">3</option>
+					<option value="2">2</option>
+					<option value="1">1</option>
 				</select>
 			</div>
-			<button type="submit" class="">Submit</button>
+			<button type="submit" class="border hover:border-gray-600 rounded w-full mt-2 py-2">Submit</button>
 		</form>`,
 	data() {
 		return {
 			name: null,
 			review: null,
-			raiting: null
+			rating: null,
+			errors: []
+		}
+	},
+	methods: {
+		onSubmit() {
+			this.errors = [];
+			if (this.name && this.review && this.rating) {
+				let productReview = {
+					name: this.name,
+					review: this.review,
+					rating: this.rating,
+				}
+				this.$emit('review-submitted', productReview)
+				this.name = null
+				this.review = null
+				this.rating = null
+			} else {
+				if (!this.name) {
+					this.errors.push("Name required")
+				}
+				if (!this.review) {
+					this.errors.push("Review required")
+				}
+				if (!this.rating) {
+					this.errors.push("Rating required")
+				}
+			}
 		}
 	}
 });
