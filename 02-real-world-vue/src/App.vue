@@ -1,32 +1,35 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link :to="{ name: 'event-list' }">List</router-link> |
-      <router-link :to="{ name: 'event-create' }">Create</router-link>
-    </div>
+    <nav-bar />
     <router-view />
   </div>
 </template>
 
+<script>
+import NavBar from "@/components/NavBar";
+
+export default {
+  components: {
+    NavBar
+  }
+}
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+html {
+  -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
+body {
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+h1 {
+  font-size: 60px;
 }
 </style>
