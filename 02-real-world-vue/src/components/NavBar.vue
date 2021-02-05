@@ -24,21 +24,24 @@
   align-items: center;
   justify-content: space-between;
 }
-
 #nav a {
   font-weight: bold;
   color: blueviolet;
 }
-
 #nav a.router-link-exact-active {
   color: black;
   text-decoration: none;
 }
-
 .brand {
   color: blueviolet;
   font-size: 42px;
   text-align: left;
   text-decoration: none;
+}
+#nav brand a {
+   color: blueviolet;
+}
+#nav brand a.router-link-exact-active {
+  color: blueviolet;
 }
 </style>

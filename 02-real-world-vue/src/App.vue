@@ -32,4 +32,7 @@ body {
 h1 {
   font-size: 60px;
 }
+p {
+  margin: 0;
+}
 </style>

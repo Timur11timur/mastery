@@ -3,7 +3,10 @@
     <div class="event-card">
       <p>@{{ event.time }} on {{ event.date }}</p>
       <h4>{{ event.title }}</h4>
-      <p>@{{ event.attendees.length }} attending</p>
+      <div class="event-attendees">
+        <bace-icon name="users"></bace-icon>
+        <p>@{{ event.attendees.length }} attending</p>
+      </div>
     </div>
   </router-link>
 </template>
@@ -42,7 +45,7 @@ h4 {
   margin: 0 auto 10px auto;
   width: 400px;
   text-align: left;
-  padding: 10px 20px;
+  padding: 15px 20px;
   box-shadow: -1px 1px 10px rgba(0,0,0,0.5);
   border-radius: 5px;
 }
@@ -52,11 +55,12 @@ h4 {
 }
 .event-card p:last-child {
   color: grey;
-  margin-top: 3px;
 }
 .event-card p:first-child {
   color: grey;
-  margin-bottom: 0;
 }
-
+.event-attendees{
+  display: flex;
+  align-items: center;
+}
 </style>
