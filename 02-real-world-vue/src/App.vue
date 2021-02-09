@@ -22,13 +22,11 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
 }
-
 body {
   margin: 0;
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
 }
-
 h1 {
   font-size: 60px;
 }
