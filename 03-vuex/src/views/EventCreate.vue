@@ -15,6 +15,7 @@
 
 <script>
 import {mapState, mapGetters} from 'vuex'
+import Datepicker from 'vuejs-datepicker'
 
 export default {
   // computed: {
@@ -56,11 +57,17 @@ export default {
       return this.$store.getters.getTodoById
     },
     ...mapGetters(['getTodoById']),
+  },
+  components: {
+    Datepicker
   }
 }
 </script>
 
 <style scoped>
+.field {
+  margin-bottom: 24px;
+}
 ul {
   width: 25%;
   text-align: left;

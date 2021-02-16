@@ -1,7 +1,7 @@
 ## Атрибуты
-...
 
 - v-bind: - привязка к переменной. Короткий вариант просто :
+- v-html - привязка к переменной с интерпретацией html
 - v-if, v-else-if, v-else - кондитионалы
 - v-show - изменяет display
 - v-for - цикл foreach  :key - привязываем
@@ -9,18 +9,24 @@
 - v-model - двухсторонняс связь с переменной
 
 ## Ивенты
-...
 
 - @click
+- @dblclick
 - @submit
 - @mouseover
+- @mousemove
 - @keyup.enter
 
-.prevent
+####Модифаеры
+    .prevent  
+    .once
+    .stop  
+    .capture  
+    .self - только на элементе, не потомках
+    .passive  
 
 
 ## Части
-...
 
 - data - пул с переменными
 - methods - пул с методами
