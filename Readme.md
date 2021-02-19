@@ -237,3 +237,137 @@ computed: {
     }
 }
 ```
+
+# VueX
+`npm install vuex --save`
+
+in file `store/store.js`:
+```
+import Vue from 'vue';
+import Vuex from 'vuex';
+
+Vue.use(Vuex);
+
+export const store = new Vuex.Store({
+    state: {
+    }
+})
+```
+
+in file `main.js`:
+```
+import { store } from './store/store'
+
+new Vue({
+  store: store,
+  ...
+})
+```
+usage
+```
+ computed: {
+    products() {
+      return this.$store.state.products;
+    }
+  }
+```
+
+### Getters
+in file `store/store.js`:
+```
+   getters: {
+        saleProducts: state => {
+            let saleProducts = state.products.map(product => {
+                return {
+                    name: '**' + product.name + '**',
+                    price: product.price / 2
+                }
+            })
+            return saleProducts;
+        }
+    }
+```
+usage
+```
+ computed: {
+    saleProducts() {
+      return this.$store.getters.saleProducts;
+    }
+  }
+```
+
+### Mutations
+in file `store/store.js`:
+```
+   mutations: {
+        reducePrice: state => {
+            state.products.forEach(product => {
+                product.price -= 1;
+            });
+        }
+    }
+```
+usage
+```
+ methods: {
+    reducePrice: function (){
+      this.$store.commit('reducePrice');
+    }
+  }
+```
+
+если в `store/store.js` включен `strict:true`, то изменения работают только через мутаторы
+
+### Actions
+in file `store/store.js`:
+```
+  actions: {
+        reducePrice: contex => {
+            setTimeout(function(){
+                contex.commit('reducePrice')
+            }, 2000);
+        }
+    }
+```
+usage
+```
+ reducePriceThroughAction: function (){
+      this.$store.dispatch('reducePrice');
+    }
+```
+
+в мутациях и акшенах можно слать параметры
+usage
+```
+  this.$store.dispatch('reducePrice', param);
+```
+in file `store/store.js`:
+```
+  actions: {
+        reducePrice: (contex, amount) => {
+            setTimeout(function(){
+                contex.commit('reducePrice', amount)
+            }, 2000);
+        }
+    }
+```
+
+### Mapping Actions & Getters
+usage
+```
+    import {mapActions} from 'vuex'
+    import {mapGetters} from 'vuex'
+    
+    
+    computed: {
+        ...mapGetters([
+            'saleProducts'
+        ])
+    },
+    methods: {
+        ...mapActions([
+            'reducePrice'
+        ])
+    }
+```
+Это будет работать только после обработки babel
