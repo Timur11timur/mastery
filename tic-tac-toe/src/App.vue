@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="grid grid-cols-3 gap-2" v-if="firstPlayerChip.length">
-        <div v-for="cell in cells" @click="tickCell(cell.name)" :key="cell.name" class="border text-blue-500 text-6xl w-28 h-28 flex justify-center items-center cursor-pointer"><p class="mb-0">{{ cell.content }}</p></div>
+        <div v-for="cell in cells" @click="tickCell(cell.name)" :key="cell.name" :class="{'bg-red-200':cell.win}" class="border text-blue-500 text-6xl w-28 h-28 flex justify-center items-center cursor-pointer hover:shadow-inner"><p class="mb-0">{{ cell.content }}</p></div>
       </div>
     </div>
     <div class="text-center mt-4 relative">
@@ -43,15 +43,15 @@ export default {
       secondPlayerChip: '',
       firstPlayerTurn: true,
       cells: [
-        {'name': 11, 'content': ''},
-        {'name': 12, 'content': ''},
-        {'name': 13, 'content': ''},
-        {'name': 21, 'content': ''},
-        {'name': 22, 'content': ''},
-        {'name': 23, 'content': ''},
-        {'name': 31, 'content': ''},
-        {'name': 32, 'content': ''},
-        {'name': 33, 'content': ''}
+        {'name': 11, 'content': '', 'win': false},
+        {'name': 12, 'content': '', 'win': false},
+        {'name': 13, 'content': '', 'win': false},
+        {'name': 21, 'content': '', 'win': false},
+        {'name': 22, 'content': '', 'win': false},
+        {'name': 23, 'content': '', 'win': false},
+        {'name': 31, 'content': '', 'win': false},
+        {'name': 32, 'content': '', 'win': false},
+        {'name': 33, 'content': '', 'win': false}
       ],
       winRules: [
           [11,12,13],
@@ -104,6 +104,7 @@ export default {
       this.finish = false;
       this.cells.map((obj) => {
         obj.content = '';
+        obj.win = false;
       })
     },
     checkWin() {
@@ -128,17 +129,26 @@ export default {
     },
     compareArrays(ticked) {
       return this.winRules.forEach((element) => {
-        let scores = 0
+        let scores = [];
+
         element.forEach((cell) => {
           if (ticked.includes(cell)) {
-            scores ++;
+            scores.push(cell);
           }
         })
-        if (scores > 2) {
+        if (scores.length > 2) {
+          this.highlightCells(scores);
           this.firstPlayerTurn = !this.firstPlayerTurn;
           this.finish = true;
         }
       });
+    },
+    highlightCells(cells) {
+      this.cells.map((obj) => {
+        if (cells.includes(obj.name)) {
+          obj.win = true;
+        }
+      })
     }
   }
 }
