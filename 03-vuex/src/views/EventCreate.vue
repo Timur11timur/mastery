@@ -7,9 +7,21 @@
       <li v-for="cat in categories" :key="cat">{{ cat }}</li>
     </ul>
     <p>Sure {{ categoryLength }} categories</p>
-    <hr>
+
+    <hr />
+
     <p>{{ getTodo(1) }}</p>
     <p>{{ getTodoById(2) }}</p>
+
+    <hr />
+
+    <form action="" class="form" @submit.prevent="createTodo">
+      <label for="name">Name:
+      <input type="text" v-model="todo.name" id="name"></label><br />
+      <label for="date">Date:
+      <datepicker v-model="todo.date" plaseholder="Select a date" id="date"></datepicker></label><br />
+      <button type="submit">Submit</button>
+    </form>
   </div>
 </template>
 
@@ -60,6 +72,24 @@ export default {
   },
   components: {
     Datepicker
+  },
+  data() {
+    return {
+      todo: {
+        name: '',
+        date: ''
+      }
+    }
+  },
+  methods: {
+    createTodo() {
+      this.$store.dispatch('createTodo', this.todo).then(() => {
+        this.todo.name = '';
+        this.todo.date = '';
+      }).catch(() => {
+        alert('Error');
+      })
+    }
   }
 }
 </script>
@@ -75,5 +105,12 @@ ul {
 }
 li {
   margin-left: 200px;
+}
+.form {
+  width: 500px;
+  margin: 0 auto;
+}
+label[for='date']>div {
+  display: inline-block;
 }
 </style>

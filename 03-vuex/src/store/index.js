@@ -17,8 +17,16 @@ export default new Vuex.Store({
       { id: 5, text: '...', done: false},
     ]
   },
-  mutations: {},
-  actions: {},
+  mutations: {
+    ADD_EVENT(state, todo) {
+      state.todos.push(todo)
+    }
+  },
+  actions: {
+    createTodo({commit}, todo) {
+      return commit('ADD_EVENT', todo)
+    }
+  },
   modules: {},
   getters: {
     categoryLength: state => {
