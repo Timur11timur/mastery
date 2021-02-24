@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import EventService from "@/services/EventService";
 
 Vue.use(Vuex);
 
@@ -20,11 +21,23 @@ export default new Vuex.Store({
   mutations: {
     ADD_EVENT(state, todo) {
       state.todos.push(todo)
+    },
+    SET_EVENTS(state, events) {
+      state.events = events
     }
   },
   actions: {
     createTodo({commit}, todo) {
       return commit('ADD_EVENT', todo)
+    },
+    fetchEvents({ commit }, { perPage, page}) {
+      EventService.getEvents(perPage, page)
+          .then(response => {
+            commit( 'SET_EVENTS', response.data)
+          })
+          .catch(error => {
+            console.log('json-server unavailable. Please run in console: json-server --watch db.json. ' + error.response);
+          })
     }
   },
   modules: {},
