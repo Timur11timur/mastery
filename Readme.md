@@ -2,11 +2,11 @@
 - **v-bind:** - привязка к переменной. Короткий вариант просто **:**  
     *в style и class передаются объекты*
 - **v-html** - привязка к переменной с интерпретацией html
-- **v-if, v-else-if, v-else** - кондитионалы
+- **v-if, v-else-if, v-else** - условия
 - **v-show** - изменяет display
 - **v-for** - цикл foreach :key - привязываем
 - **v-on:click** - привязка ивента. Короткий вариант просто **@**  
-  *если не передавать аргумент в функцию, то будет получен event первым агрументом, чтобы передать принудительно - передаем $event*
+  *если не передавать аргумент в функцию, то будет получен event первым аргументом, чтобы передать принудительно - передаем **$event** *
 - **v-model** - двухсторонняя связь с переменной
 
 ## Ивенты
@@ -346,6 +346,30 @@ in file `store/store.js`:
         }
     }
 ```
+
+### Modules
+in file `store/modules/name.js`:
+```
+export const state = { ... }
+export const mutations = { ... }
+export const actions = { ... }
+export const getters = { ... }
+```
+in file `store/store.js`:
+```
+   import * as name from '@/store/modules/name.js'
+    
+   modules: {
+       name
+   }
+```
+
+#### namespace
+in file `store/modules/name.js`:
+export const namespase = true;
+
+dispatch('name/action', 'name', { root: true })
+
 
 ### Mapping Actions & Getters
 usage
