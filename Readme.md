@@ -14,6 +14,7 @@
 - @dblclick
 - @submit
 - @mouseover
+- @mouseleave
 - @mousemove
 - @keyup.enter
 
@@ -25,6 +26,8 @@
     .self - только на элементе, не потомках  
     .passive  
     .lazy - значение уходят дальше толко когда элемент теряет фокус
+    .right - олько правая кнопка
+    .alt - с зажатой ALT
 
 ## Части 
 - data - пул с переменными
@@ -107,12 +110,30 @@ created(){
 }
 ```
 
+### Slot
+`<template v-slot:links>`
+`<slot name="links"></slot>`
+
+## Teleport
+блок не внутри div c id="app"
+`<div class="modals"></div>`
+внутри vue файла в template
+`<teleport to=".modals"></teleport>`
+
+
 # Использование сторонних плагинов
 В main.js `import Module from 'module'`
 `Vue.use(Module)`
 
 # Lifecycle hooks
-beforeCreate, created, beforeMounted, mounted, beforeUpdate, updated, beforeDestroy, destroyed 
+- beforeCreate, 
+- created,
+- beforeMounted,
+- mounted, 
+- beforeUpdate, 
+- updated, 
+- beforeDestroy, 
+- destroyed 
 
 # Filters
 `<h1>{{ title | to-uppercase }}</h1>`
