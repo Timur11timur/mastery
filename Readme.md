@@ -17,6 +17,8 @@
 - @mouseleave
 - @mousemove
 - @keyup.enter
+- @keydown
+- @keypress
 
 #### Модифаеры
     .prevent    
