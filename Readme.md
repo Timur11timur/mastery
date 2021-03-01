@@ -241,8 +241,54 @@ export default {
 `<router-link to="/">Home</router-link>`
 если добавить атрибут `exact`, то будет активна только когда на ней, а не на потомках
 
+**Привязываем ссылку по имени компонента**  
+`<router-link :to="{ name: 'About'} ">About</router-link>`
+
 ### Параметры роута
-`/blog/:id` в компоненте получить `this.$route.params.id`
+`/blog/:id` в компоненте получить `this.$route.params.id`  
+`<router-link :to="{ name: 'JobDelails', params: { id: job.id }}">`  
+если в роутах прописать `props: true`, то в компоненте `props: ['id']`
+
+### Redirect
+in route/index.js
+```
+{
+    path: '/all-jobs',
+    redirect: '/jobs'
+}
+```
+
+### 404 Page
+создаём компонент, например NotFound.vue
+in route/index.js
+```
+{
+    path: '/:catchAll(.*)',
+    name: NotFound,
+    component: NotFound,
+  }
+```
+
+### ходим по истории и редирект
+в любом компоненте:
+```
+<button @click="redirect">Redirect</button>
+<button @click="back">Go back</button>
+<button @click="forward">Go forward</button>
+
+  methods: {
+    redirect() {
+      this.$router.push({ name: 'Home' })
+    },
+    back() {
+      this.$router.go(-1)
+    },
+    forward() {
+      this.$router.go(1)
+    }
+  }
+```
+
 
 #### example of search
 `<div v-for="blog in filteredBlogs"></div>`
@@ -413,3 +459,8 @@ usage
     }
 ```
 Это будет работать только после обработки babel
+
+# Json-server
+`npm install json-server`  
+создаем файл db.json  
+`json-server --watch db.json`
