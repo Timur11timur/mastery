@@ -602,3 +602,7 @@ export default {
     return {stopEffect, hangleClick}
 ```
 #### props in Composition API
+```
+props: ['post'],
+setup(props) { ... }
+```

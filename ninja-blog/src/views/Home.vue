@@ -14,7 +14,7 @@ export default {
   components: { PostList },
   setup() {
     const posts = ref ([
-      {title: 'welcome to the blog', body: 'Lorem ipsum', id: 1},
+      {title: 'welcome to the blog', body: '', id: 1},
       {title: 'top 5 css tips', body: 'lorem 2 ipsum', id: 2},
     ])
 
