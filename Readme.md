@@ -58,6 +58,22 @@ data во Vue - обьект, а в компоненте - функция воз
 в template `<div ref="myObj">Some text</div>`  
 во Vue `this.$refs.myObj.innerText`
 
+in  Composition API:
+```
+import { ref } from 'vue'
+
+export default {
+  setup() {
+    const p = ref(null)
+
+    return {
+      p
+    }
+  }
+}
+```
+
+
 #Vue CLI
 npm i -g @vue/cli  
 vue create project-name  
@@ -464,3 +480,125 @@ usage
 `npm install json-server`  
 создаем файл db.json  
 `json-server --watch db.json`
+
+# Composition API
+
+```
+export default {
+    setup() {
+        //data
+        
+        //methods
+        
+        //computed
+        
+        //lifecycle hooks
+    }
+}
+```
+Пример
+```
+setup() {
+    let name = 'mario'
+    let age = 30    
+    const handleClick = () => {
+      console.log('you clicked me')
+    }
+    
+    return {
+      name: name,
+      age,
+      handleClick
+    }
+}
+```
+Данные не реактивны и появляются до beforeCreated
+
+сделать их:
+```
+import { ref } from 'vue'
+
+export default {
+  name: 'Home',
+  setup() {
+    const name = ref('mario')
+
+    const handleClick = () => {
+     name.value = 'luigi'
+    }
+
+    return {
+      name,
+      handleClick,
+      p
+    }
+  }
+}
+```
+
+*reactive* то же что и *ref* но не нужно писать *.value* и имеет недостатки
+
+#### Computed in Composition API
+пример поиска
+```
+<template>
+  <div class="home">
+    <input type="text" v-model="search">
+    <p> search term - {{ search }}</p>
+    <div v-for="name in matchingNames" :key="name">{{ name }}</div>
+  </div>
+</template>
+
+<script>
+import { ref,computed } from 'vue'
+
+export default {
+  name: 'Home',
+  setup() {
+    const search = ref('')
+    const names = ref(['mario', 'yoshi', 'luigi', 'toad', 'bowser', 'koopa', 'peach'])
+
+    const matchingNames = computed(() => {
+      return names.value.filter((name) => name.includes(search.value))
+    })
+
+    return {
+      names,
+      search,
+      matchingNames,
+    }
+  }
+}
+</script>
+```
+#### watch and watchEffect
+```
+import { watch, watchEffect } from 'vue'
+
+export default {
+  setup() {
+    const search = ref('')
+    watch(search, () => {
+      console.log('watch')
+    })
+    watchEffect(() => {
+      console.log('watchEffect function ran', search.value)
+    })
+    return { search }
+}
+```
+
+**Stop watching**
+```
+    <button @click="hangleClick"></button>
+    ...
+    
+    const stopEffect = watchEffect(...)
+
+    const hangleClick = () => {
+      stopEffect()
+    }
+    
+    return {stopEffect, hangleClick}
+```
+#### props in Composition API
