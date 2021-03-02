@@ -606,3 +606,13 @@ export default {
 props: ['post'],
 setup(props) { ... }
 ```
+#### Lifecycle hooks in Composition API
+Если они внутри setup() нужно добавлять приставку on
+```
+import  {onMounted, onUnmounted } from 'vue'
+export default {
+  setup(props) {
+    onMounted(() => console.log('component mounted'))
+    onUnmounted(() => console.log('component unmounted'))   
+  }
+```
