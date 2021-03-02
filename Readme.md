@@ -616,3 +616,53 @@ export default {
     onUnmounted(() => console.log('component unmounted'))   
   }
 ```
+
+# Анимация
+
+##`<transition>`
+
+при заходе на страницу:  
+***.enter-from***  
+***.enter-to***  
+***.enter-active***
+
+при покидании страницы:
+***.leave-from***  
+***.leave-to***  
+***.leave-active***
+
+можно добавить имя `<transition name="timur">` тогда все с префиксом `.timur-enter-from{}`
+
+атрибуты `mode="out-in"` и `mode="in-out"` устанавливает очередь между двумя элементами `v-if/v-else`
+
+## <transition-group tag="ul">
+то же что и у transition, но есть еще класс:  
+*.move*
+
+для наглядности работы move при удалении даем элементу position: absolute  
+`.list-leave-active { position: absolute }`
+
+Если добавить атрибут ***appear***, то анимация воспроизводится при первом появлении - при загрузке
+`<transition-group tag="ul" name="list" appear>`
+
+Enter hooks:
+***before-enter***
+***enter***
+***after-enter***
+
+Leave hooks:
+***before-leave***
+***leave***
+***after-leave***
+
+```
+<transition
+    @before-enter="beforeEnter"
+    @after-leave="afterLeave"
+```
+в функцию можно прокинуть сам элемент **el**
+```
+const beforeLeave = (el) => {
+    el.style.color = 'green'
+}
+```
